@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>mint-ui</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="../css/reset.css" />
+		<script src="../js/init-vue.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.page-msgbox-wrapper {
+				box-sizing: border-box;
+				padding: 0 20px;
+				position: absolute;
+				top: 50%;
+				width: 100%;
+				transform: translateY(-50%);
+			}
+			
+			.page-msgbox-wrapper button:not(:last-child) {
+				margin-bottom: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="page-msgbox">
+				<i class="mintui mintui-back" onclick="window.history.back();"></i>
+				<h1 class="page-title">Message Box</h1>
+				<div class="page-msgbox-wrapper">
+					<mt-button @click.native="openAlert" size="large">打开 alert 提示框</mt-button>
+					<mt-button @click.native="openConfirm" size="large">打开 confirm 提示框</mt-button>
+					<mt-button @click.native="openPrompt" size="large">打开 prompt 提示框</mt-button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: '#app',
+			methods: {
+				openAlert() {
+					MessageBox.alert('操作成功!', '提示');
+				},
+				openConfirm() {
+					MessageBox.confirm('确定执行此操作?', '提示');
+				},
+				openPrompt() {
+					MessageBox.prompt(' ', '请输入姓名').then(({
+						value
+					}) => {
+						if(value) {
+							MessageBox.alert(`你的名字是 ${ value }`, '输入成功');
+						}
+					});
+				}
+			}
+		})
+	</script>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>mint-ui</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1469597443_9221172.css"/>
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+		<script src="js/nav.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.page-demo {
+				padding-bottom: 50px;
+			}
+			
+			.indexicon {
+				font-size: 22px;
+				color: #26a2ff;
+				display: inline-block;
+				width: 30px;
+				vertical-align: middle;
+			}
+			
+			.icon-swipe {
+				font-size: 26px;
+			}
+			
+			.icon-checklist {
+				font-size: 18px;
+			}
+			
+			.page-title {
+				font-size: 20px;
+				margin: 20px auto;
+				text-align: center;
+				display: block;
+				line-height: 1;
+			}
+			
+			.page-part {
+				margin-bottom: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<section class="page-demo">
+				<div v-for="group in navs">
+					<div class="page-title" v-text="group.title"></div>
+					<mt-cell v-for="item in group.list" @click.native="linkTo(item.path)" is-link>
+						<div slot="title">
+							<i :class="['indexicon', 'icon-' + item.icon]"></i>
+							<span>{{ item.name }}</span>
+						</div>
+					</mt-cell>
+				</div>
+			</section>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: '#app',
+			data() {
+				return {
+					navs: NavConfig
+				};
+			},
+			methods: {
+				linkTo: function(url){
+					console.log(url);
+					window.location.href = "html" + url + ".html";
+				}
+			}
+		})
+	</script>
+
+</html>

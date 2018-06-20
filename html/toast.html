@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>mint-ui</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+		<script src="../js/init-vue.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.page-toast-wrapper {
+				box-sizing: border-box;
+				padding: 0 20px;
+				position: absolute;
+				top: 50%;
+				width: 100%;
+				transform: translateY(-50%);
+			}
+			
+			button:not(:last-child) {
+				margin-bottom: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="page-toast">
+				<i class="mintui mintui-back" onclick="window.history.back();"></i>
+				<h1 class="page-title">Toast</h1>
+				<div class="page-toast-wrapper">
+					<mt-button @click.native="openToast" size="large">点击弹出 Toast</mt-button>
+					<mt-button @click.native="openToastWithIcon" size="large">点击弹出带有 icon 的 Toast</mt-button>
+					<mt-button @click.native="openBottomToast" size="large">自定义 Toast 位置</mt-button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: '#app',
+			methods: {
+				openToast: function() {
+					Toast('提示信息');
+				},
+				openToastWithIcon: function() {
+					Toast({
+						message: '操作成功',
+						iconClass: 'mintui mintui-success'
+					});
+				},
+				openBottomToast: function() {
+					Toast({
+						message: '提示信息',
+						position: 'bottom'
+					});
+				},
+
+			}
+		})
+	</script>
+
+</html>

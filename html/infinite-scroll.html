@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>mint-ui</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="../css/reset.css" />
+		<script src="../js/init-vue.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.page-infinite-desc {
+				text-align: center;
+				color: #666;
+				padding-bottom: 5px;
+				border-bottom: solid 1px #eee;
+			}
+			
+			.page-infinite-listitem {
+				height: 50px;
+				line-height: 50px;
+				border-bottom: solid 1px #eee;
+				text-align: center;
+			}
+			
+			.page-infinite-listitem:first-child {
+				border-top: solid 1px #eee;
+			}
+			
+			.page-infinite-wrapper {
+				margin-top: -1px;
+				overflow: scroll;
+			}
+			
+			.page-infinite-loading {
+				text-align: center;
+				height: 50px;
+				line-height: 50px;
+			}
+			
+			.page-infinite-loading div {
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="page-infinite">
+				<i class="mintui mintui-back" onclick="window.history.back();"></i>
+				<h1 class="page-title">Infinite Scroll</h1>
+				<p class="page-infinite-desc">当即将滚动至列表底部时, 自动加载更多数据</p>
+				<div class="page-infinite-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+					<ul class="page-infinite-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50">
+						<li v-for="item in list" class="page-infinite-listitem">{{ item }}</li>
+					</ul>
+					<p v-show="loading" class="page-infinite-loading">
+						<mt-spinner type="fading-circle"></mt-spinner>
+						加载中...
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: '#app',
+			data() {
+				return {
+					list: [],
+					loading: false,
+					allLoaded: false,
+					wrapperHeight: 0
+				};
+			},
+			methods: {
+				loadMore() {
+					this.loading = true;
+					setTimeout(() => {
+						let last = this.list[this.list.length - 1];
+						for(let i = 1; i <= 10; i++) {
+							this.list.push(last + i);
+						}
+						this.loading = false;
+					}, 2500);
+				}
+			},
+			mounted() {
+				this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
+				for(let i = 1; i <= 20; i++) {
+					this.list.push(i);
+				}
+			}
+		})
+	</script>
+
+</html>

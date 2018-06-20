@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>mint-ui</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="../css/reset.css" />
+		<script src="../js/init-vue.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.page-indicator-wrapper {
+				box-sizing: border-box;
+				padding: 0 20px;
+				position: absolute;
+				top: 50%;
+				width: 100%;
+				transform: translateY(-50%);
+			}
+			
+			button:not(:last-child) {
+				margin-bottom: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<i class="mintui mintui-back" onclick="window.history.back();"></i>
+			<h1 class="page-title">Indicator</h1>
+			<div class="page-indicator-wrapper">
+				<mt-button @click.native="openIndicator" size="large">点击弹出 Indicator</mt-button>
+				<mt-button @click.native="openIndicatorWithSpinner" size="large">可配置 spinner</mt-button>
+				<mt-button @click.native="openIndicatorWithText" size="large">点击弹出带有文字的 Indicator</mt-button>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: '#app',
+			methods: {
+				openIndicator: function() {
+					Indicator.open();
+					setTimeout(() => Indicator.close(), 2000);
+				},
+				openIndicatorWithSpinner: function() {
+					Indicator.open({
+						spinnerType: 'fading-circle'
+					});
+					setTimeout(() => Indicator.close(), 2000);
+				},
+				openIndicatorWithText: function() {
+					Indicator.open('加载中...');
+					setTimeout(() => Indicator.close(), 2000);
+				}
+			},
+			beforeDestroy: function() {
+				Indicator.close();
+			}
+		})
+	</script>
+
+</html>
