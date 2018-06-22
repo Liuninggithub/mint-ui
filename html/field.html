@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>mint-ui</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="../css/reset.css" />
+		<script src="../js/init-vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/web_city.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.page-picker-addr .mint-cell-value {
+				-webkit-box-flex: 1;
+				-ms-flex: 1;
+				flex: 1;
+				color: inherit;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				color: #757575;
+			}
+			
+			.page-picker-addr .mint-cell-title {
+				width: 105px;
+				-webkit-box-flex: 0;
+				-ms-flex: none;
+				flex: none;
+			}
+			
+			.mint-popup-4 {
+				width: 100%;
+			}
+			
+			.mint-popup-4 .picker-items {
+				background-color: #efeff4;
+				font-size: 14px;
+			}
+			.mint-popup-4 .picker-items .picker-slot {
+
+				font-size: 14px;
+			}
+			
+			.button-wrapper {
+				padding: 4px 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="page-field">
+
+				<i class="mintui mintui-back" onclick="window.history.back();"></i>
+				<div class="page-title">Field</div>
+				<div class="page-part">
+					<mt-field label="用户名" placeholder="请输入用户名" :attr="{ maxlength: 10 }"></mt-field>
+					<mt-field label="邮箱" placeholder="请输入邮箱" type="email"></mt-field>
+					<mt-field label="密码" placeholder="请输入密码" type="password"></mt-field>
+					<mt-field label="手机号" placeholder="请输入手机号" type="tel"></mt-field>
+					<mt-field label="网站" placeholder="请输入网址" type="url"></mt-field>
+					<mt-field label="数字" placeholder="请输入数字" type="number"></mt-field>
+					<mt-field label="生日" placeholder="请输入生日" type="date"></mt-field>
+					<mt-field label="自我介绍" placeholder="自我介绍" type="textarea" rows="4"></mt-field>
+				</div>
+
+				<div class="page-part">
+					<mt-field placeholder="登录邮箱" type="email"></mt-field>
+					<mt-field placeholder="密码" type="password"></mt-field>
+				</div>
+
+				<div class="page-part">
+					<mt-field label="邮箱" placeholder="成功状态" state="success"></mt-field>
+					<mt-field label="邮箱" placeholder="失败状态" state="error"></mt-field>
+					<mt-field label="邮箱" placeholder="警告状态" state="warning"></mt-field>
+				</div>
+
+				<div class="page-part">
+					<mt-field label="验证码" placeholder="输入验证码">
+						<!--<img src="../assets/100x100.png" height="48px" width="100px">-->
+					</mt-field>
+				</div>
+
+				<br /><br /><br />
+				<div class="page-part ">
+					<mt-cell :title="'选项 ' + value3">
+						<mt-switch v-model="value3"></mt-switch>
+					</mt-cell>
+					<div class="page-picker-addr" @click="openAddrPicker">
+						<mt-cell title="地址：" to="javascript:;">
+							<i class="mintui mintui-back" style="top: 7px; right: 25px; left: inherit; transform: rotate(-90deg); transform-origin: right center;"></i>
+							<!--<mt-switch v-model="value3" @change="handleChange"></mt-switch>-->
+							<p>{{addrPro}} - {{addrCity}} - {{addrDist}}</p>
+						</mt-cell>
+					</div>
+
+				</div>
+
+			</div>
+
+			<mt-popup v-model="popupVisible4" position="bottom" class="mint-popup-4">
+				<mt-picker :slots="addressSlots" @change="onAddressChange" :visible-item-count="5" :show-toolbar="true">
+					<div class="button-wrapper">
+						<mt-button size="small" style="float: left;">small</mt-button>
+						<mt-button size="small" style="float: right;">small</mt-button>
+					</div>
+
+				</mt-picker>
+			</mt-popup>
+
+		</div>
+
+	</body>
+	<script>
+		new Vue({
+			el: '#app',
+			data() {
+				return {
+					value1: false,
+					value2: false,
+					value3: true,
+					value4: true,
+					popupVisible4: false,
+					addressSlots: [{
+						flex: 1,
+						values: [],
+						className: 'slot1',
+						textAlign: 'center'
+					}, {
+						flex: 1,
+						values: ["请选择"],
+						className: 'slot2',
+						textAlign: 'center'
+					}, {
+						flex: 1,
+						values: ["请选择"],
+						className: 'slot3',
+						textAlign: 'center'
+					}],
+					addrPro: "请选择",
+					addrCity: "请选择",
+					addrDist: "请选择",
+					list_pro: [],
+					list_city: [],
+					list_dist: [],
+				};
+			},
+			methods: {
+				openAddrPicker() {
+					console.log("open")
+					this.popupVisible4 = true;
+				},
+				onPickerChange(picker, values) {
+					console.log(picker)
+					console.log(values)
+				},
+				onAddressChange(picker, values) {
+					var _this = this;
+//					console.log(picker)
+					console.log(values)
+					picker.setSlotValues(1, _this.getCityList(values));
+					picker.setSlotValues(2, _this.getDistList(values));
+					this.addrPro = values[0]
+					this.addrCity = values[1]
+					this.addrDist = values[2]
+				},
+				getCityList(values){
+					var _this = this;
+					var returnList = [];
+					var index_pro = _this.list_pro.indexOf(values[0]);
+					if(index_pro > -1){
+						var list = areaJson[index_pro].aearList;
+							for(var j=0; j<list.length; j++){
+								returnList.push(list[j].areaName)
+							}
+							this.list_city = returnList;
+					}
+					return returnList;
+				},
+				getDistList(values){
+					var _this = this;
+					var returnList = [];
+					var index_pro = _this.list_pro.indexOf(values[0]);
+					var index_city = _this.list_city.indexOf(values[1]);
+					if(index_pro >-1 && index_city >-1){
+						var listDist = areaJson[index_pro].aearList[index_city].aearList;
+//						console.log(listDist)
+						for(var i=0; i<listDist.length; i++){
+							returnList.push(listDist[i].areaName)
+						}
+					}
+					this.list_dist = returnList;
+					return returnList;
+				}
+			},
+			mounted() {
+				var _this = this;
+				console.log(areaJson);
+				this.list_pro = [];
+				for(var i = 0; i < areaJson.length; i++) {
+					this.list_pro.push(areaJson[i].areaName);
+				}
+//				console.log(_this.list_pro)
+				this.addressSlots[0].values = _this.list_pro;
+			}
+		})
+	</script>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>mint-ui</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="../css/reset.css" />
+		<script src="../js/init-vue.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.mintui-back {
+				position: inherit;
+				top: 22px;
+				left: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="page-cell">
+				<i class="mintui mintui-back" onclick="window.history.back();"></i>
+				<div class="page-title">Cell</div>
+				<mt-cell title="标题文字"></mt-cell>
+				<mt-cell title="标题文字" value="说明文字"></mt-cell>
+				<mt-cell title="标题文字" icon="more" value="带 icon"></mt-cell>
+				<mt-cell title="标题文字" icon="more">
+					<span>icon 是图片</span>
+					<img slot="icon" src="../img/100x100.png" width="24" height="24">
+				</mt-cell>
+				<mt-cell title="标题文字" is-link value="带链接"></mt-cell>
+				<mt-cell title="标题文字" is-link>
+					<span style="color: green">这里是元素</span>
+				</mt-cell>
+				<mt-cell title="标题文字">
+					<mt-button size="small" type="primary" icon="back">按钮</mt-button>
+				</mt-cell>
+
+				<mt-cell title="标题" label="描述信息" is-link></mt-cell>
+
+				<mt-cell title="原生跳转" label="跳转到 https://mint-ui.github.io" is-link to="https://mint-ui.github.io"></mt-cell>
+				<mt-cell title="路由跳转" label="跳转到 /#/toast" is-link :to="{ name: 'Toast' }"></mt-cell>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: '#app',
+			methods: {
+
+			}
+		})
+	</script>
+
+</html>

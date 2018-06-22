@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>mint-ui</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+		<!-- 先引入 Vue -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="../css/reset.css" />
+		<script src="../js/init-vue.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.page-switch-padding {
+				padding: 0 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="page-switch">
+				<i class="mintui mintui-back" onclick="window.history.back();"></i>
+				<div class="page-title">Switch</div>
+				<div class="page-part page-switch-padding">
+					<mt-switch v-model="value1" @change="handleChange">
+						<label v-text="value1"></label>
+					</mt-switch>
+				</div>
+
+				<div class="page-part page-switch-padding">
+					<mt-switch v-model="value4" @change="handleChange">
+						<label v-text="value4"></label>
+					</mt-switch>
+				</div>
+
+				<mt-cell :title="'选项 ' + value2">
+					<mt-switch v-model="value2" @change="handleChange"></mt-switch>
+				</mt-cell>
+				<mt-cell :title="'选项 ' + value3">
+					<mt-switch v-model="value3" @change="handleChange"></mt-switch>
+				</mt-cell>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: '#app',
+			data() {
+				return {
+					value1: false,
+					value2: false,
+					value3: true,
+					value4: true
+				};
+			},
+
+			methods: {
+				handleChange(event) {
+					console.log(event);
+				}
+			}
+		})
+	</script>
+
+</html>
